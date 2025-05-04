@@ -640,7 +640,32 @@ export default function Main() {
           className="w-[90%] rounded-2xl max-h-[70%] overflow-y-scroll md:max-w-2xl md:max-h-[80%] bg-gradient-to-br from-card to-[hsl(var(--card)/0.95)] text-foreground border border-border shadow-lg"
           style={{ fontFamily: code.style.fontFamily }}
         >
-          <p> Bueno aqui esta ya todo</p>
+          <p>
+            Bienvenido a Los Volumenes, una demo interactiva de almacenamiento
+            en la nube.
+            <br />
+            <br />
+            Esta es una versión de demostración donde podrás explorar la
+            interfaz y navegar por el contenido, pero no podrás subir archivos
+            nuevos. La aplicación te permite visualizar cómo sería una
+            plataforma de almacenamiento personal con diferentes categorías para
+            tus archivos.
+            <br />
+            <br />
+            Puedes navegar entre las diferentes secciones, ver las estadísticas
+            y explorar la organización de archivos por categorías como imágenes,
+            videos, audio y documentos.
+            <br />
+            <br />
+            Esta demo es solo para fines de visualización y evaluación de la
+            interfaz de usuario.
+            <br />
+            <br />
+            <span className="opacity-50">
+              Nota: Todas las funcionalidades de carga y modificación de
+              archivos están deshabilitadas en esta versión de demostración.
+            </span>
+          </p>
           <AlertDialogCancel asChild>
             <Button
               onClick={() => handleCloseMessage()}
