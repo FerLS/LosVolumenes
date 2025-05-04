@@ -18,34 +18,44 @@ async function listFilesFromGitHub(directoryPath) {
     Accept: "application/vnd.github+json",
   };
 
-  const response = await fetch(
-    `https://api.github.com/repos/${GITHUB_REPO}/contents/${githubPath}?ref=${GITHUB_BRANCH}`,
-    { headers }
-  );
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/${githubPath}?ref=${GITHUB_BRANCH}`,
+      { headers }
+    );
 
-  if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`GitHub API error: ${response.status}`);
+    }
+
+    const items = await response.json();
+
+    // Use for loop instead of map to avoid potential transpilation issues
+    const result = [];
+    for (let index = 0; index < items.length; index++) {
+      const item = items[index];
+      result.push({
+        name: item.name,
+        type: getFileType(item.name),
+        size: item.size || 0,
+        sizeFormatted: `${Math.round((item.size || 0) / 1024)} KB`,
+        location: "Unknown",
+        date: item.last_modified || new Date().toLocaleDateString(),
+        url: `${githubPath}/${item.name}`,
+        metadata: {
+          name: item.name,
+          mimeType: getMimeType(item.name),
+          extension: path.extname(item.name),
+        },
+        github_url: item.download_url,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Error fetching GitHub files:", error);
+    return []; // Return empty array on error for graceful degradation
   }
-
-  const items = await response.json();
-
-  // Transform GitHub items to match our app's File model format
-  return items.map((item) => ({
-    name: item.name,
-    type: getFileType(item.name),
-    size: item.size,
-    sizeFormatted: `${Math.round(item.size / 1024)} KB`,
-    location: "Unknown", // GitHub doesn't provide location metadata
-    date: item.last_modified || new Date().toLocaleDateString(),
-    url: `${githubPath}/${item.name}`,
-    metadata: {
-      name: item.name,
-      mimeType: getMimeType(item.name),
-      extension: path.extname(item.name),
-    },
-    // Add download_url from GitHub for direct access
-    github_url: item.download_url,
-  }));
 }
 
 // Helper function to determine file type
