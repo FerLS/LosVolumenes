@@ -641,29 +641,32 @@ export default function Main() {
           style={{ fontFamily: code.style.fontFamily }}
         >
           <p>
-            Bienvenido a Los Volumenes, una demo interactiva de almacenamiento
-            en la nube.
+            ¡Hola! Bienvenido a Los Volumenes, tu nuevo espacio personal en la
+            nube.
             <br />
             <br />
-            Esta es una versión de demostración donde podrás explorar la
-            interfaz y navegar por el contenido, pero no podrás subir archivos
-            nuevos. La aplicación te permite visualizar cómo sería una
-            plataforma de almacenamiento personal con diferentes categorías para
-            tus archivos.
+            Estás a punto de explorar una plataforma diseñada para que organices
+            tus archivos de forma sencilla e intuitiva. Aquí podrás almacenar
+            tus fotos, videos, música y documentos, todo en un solo lugar y con
+            un diseño que hace que navegar por tus recuerdos sea una experiencia
+            agradable.
             <br />
             <br />
-            Puedes navegar entre las diferentes secciones, ver las estadísticas
-            y explorar la organización de archivos por categorías como imágenes,
-            videos, audio y documentos.
+            Navega entre las diferentes categorías, visualiza tus estadísticas
+            de uso y organiza tu contenido como mejor te parezca. La interfaz se
+            adapta perfectamente tanto a tu móvil como a tu ordenador, así que
+            podrás acceder a tus archivos desde cualquier dispositivo.
             <br />
             <br />
-            Esta demo es solo para fines de visualización y evaluación de la
-            interfaz de usuario.
+            Esta versión que estás viendo es completamente funcional. Puedes
+            subir archivos, crear carpetas y gestionar tu contenido con total
+            libertad. Todo lo que necesitas para empezar a usar tu nube personal
+            está listo.
             <br />
             <br />
-            <span className="opacity-50">
-              Nota: Todas las funcionalidades de carga y modificación de
-              archivos están deshabilitadas en esta versión de demostración.
+            <span className="opacity-70">
+              Consejo: Comienza explorando las diferentes categorías o sube tu
+              primer archivo para ver cómo funciona todo.
             </span>
           </p>
           <AlertDialogCancel asChild>
@@ -671,7 +674,7 @@ export default function Main() {
               onClick={() => handleCloseMessage()}
               className="bg-primary text-primary-foreground hover:bg-primary/80 shadow-md hover:shadow-lg transition-all"
             >
-              Entrar
+              Comenzar a explorar
             </Button>
           </AlertDialogCancel>
         </AlertDialogContent>
