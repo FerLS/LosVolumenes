@@ -6,65 +6,50 @@ import EXIF from "exif-js";
 import axios from "axios";
 import exifr from "exifr";
 import { promises as fsPromises } from "fs";
+import demoData from "@/public/DriveDemo/index.json";
 
-// En la función listFilesFromDemo
+// Reemplazar la función listFilesFromDemo
 async function listFilesFromDemo(directoryPath) {
   try {
     // Extraer la ruta después de "uploads/"
     const relativePath = directoryPath.replace(/^uploads\//, "");
-    const fullDemoPath = path.join(
-      process.cwd(),
-      "public",
-      "DriveDemo",
-      relativePath
-    );
 
-    console.log("Listando archivos de:", fullDemoPath);
+    console.log("Buscando archivos en:", relativePath);
 
-    // Leer el directorio
-    const items = await fsPromises.readdir(fullDemoPath, {
-      withFileTypes: true,
+    // Filtrar archivos por la ruta especificada
+    const files = demoData.files.filter((file) => {
+      // Verificar si la URL del archivo comienza con la ruta y no tiene más subdirectorios
+      const urlParts = file.url.split("/");
+      const pathParts = relativePath.split("/");
+
+      // Si la ruta es "drive", y el archivo está directo en drive (2 partes: drive/archivo.ext)
+      if (relativePath === "drive" && urlParts.length === 2) {
+        return urlParts[0] === "drive";
+      }
+
+      // Para otros casos, verificar que el archivo esté exactamente en la carpeta especificada
+      // (no en subcarpetas más profundas)
+
+      return (
+        file.url.startsWith("/DriveDemo" + relativePath + "/") &&
+        urlParts.length === pathParts.length + 2
+      );
     });
 
-    // Filtrar solo archivos (no directorios)
-    const files = items.filter((item) => item.isFile());
+    console.log("Archivos encontrados:", files.length);
 
-    // Convertir a formato esperado
-    const result = [];
-    for (const file of files) {
-      const fileStat = await fsPromises.stat(
-        path.join(fullDemoPath, file.name)
-      );
-      const fileSizeInKB = Math.round(fileStat.size / 1024);
-
-      // URL relativa para acceder al archivo desde el navegador
-      const publicUrl = `${relativePath}/${file.name}`;
-
-      result.push({
-        name: file.name,
-        type: getFileType(file.name),
-        size: fileSizeInKB,
-        sizeFormatted: `${fileSizeInKB} KB`,
-        location: "Demo",
-        date: fileStat.mtime.toISOString(),
-        url: publicUrl,
-        metadata: {
-          name: file.name,
-          mimeType: getMimeType(file.name),
-          extension: path.extname(file.name),
-        },
-        favorite: false,
-      });
-    }
-
-    return result;
+    return files;
   } catch (error) {
     console.error("Error fetching demo files:", error);
-    return []; // Return empty array in case of error
+    return [];
   }
 }
 
-// También actualiza la función getAllDemoFiles de manera similar
+// Actualizar la función getAllDemoFiles para usar el JSON
+async function getAllDemoFiles() {
+  // Simplemente devolver todos los archivos del JSON
+  return demoData.files;
+}
 
 // Helper function to determine file type
 function getFileType(fileName) {
@@ -429,7 +414,7 @@ export async function GET(request) {
         // For stats request in demo mode
         if (stats) {
           // Get all files recursively for stats
-          const allFiles = await getAllDemoFiles("drive");
+          const allFiles = await getAllDemoFiles();
 
           const totalFiles = allFiles.length;
           const totalSize = allFiles.reduce(
@@ -529,52 +514,6 @@ export async function GET(request) {
       { status: 500 }
     );
   }
-}
-
-// Helper function to get all files recursively for stats
-async function getAllDemoFiles(directoryPath) {
-  let allFiles = [];
-
-  async function scanDirectory(dirPath) {
-    const fullPath = path.join(process.cwd(), "public", "DriveDemo", dirPath);
-
-    try {
-      const items = await fsPromises.readdir(fullPath, { withFileTypes: true });
-
-      for (const item of items) {
-        if (item.isDirectory()) {
-          // Recursion for subdirectories
-          await scanDirectory(path.join(dirPath, item.name));
-        } else {
-          // It's a file, add it to the list
-          const fileStat = await fsPromises.stat(
-            path.join(fullPath, item.name)
-          );
-          const fileSizeInKB = Math.round(fileStat.size / 1024);
-
-          allFiles.push({
-            name: item.name,
-            type: getFileType(item.name),
-            size: fileSizeInKB,
-            sizeFormatted: `${fileSizeInKB} KB`,
-            location: "Demo",
-            date: fileStat.mtime.toISOString(),
-            url: `${dirPath}/${item.name}`,
-            metadata: {
-              name: item.name,
-              mimeType: getMimeType(item.name),
-              extension: path.extname(item.name),
-            },
-          });
-        }
-      }
-    } catch (error) {
-      console.error(`Error scanning directory ${dirPath}:`, error);
-    }
-  }
-
-  await scanDirectory(directoryPath);
-  return allFiles;
 }
 
 export async function DELETE(request) {

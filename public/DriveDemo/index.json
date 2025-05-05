@@ -1,0 +1,145 @@
+{
+  "files": [
+    {
+      "name": "README.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.113Z",
+      "url": "/DriveDemo/drive/Downloads/README.txt",
+      "metadata": {
+        "name": "README.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": false
+    },
+    {
+      "name": "README.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.150Z",
+      "url": "/DriveDemo/drive/Images/Family/README.txt",
+      "metadata": {
+        "name": "README.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": false
+    },
+    {
+      "name": "README.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.145Z",
+      "url": "/DriveDemo/drive/Images/Vacation/README.txt",
+      "metadata": {
+        "name": "README.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": false
+    },
+    {
+      "name": "resume.docx",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.138Z",
+      "url": "/DriveDemo/drive/Personal/resume.docx",
+      "metadata": {
+        "name": "resume.docx",
+        "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "extension": ".docx"
+      },
+      "favorite": true
+    },
+    {
+      "name": "README.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:30:46.657Z",
+      "url": "/DriveDemo/drive/README.txt",
+      "metadata": {
+        "name": "README.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": false
+    },
+    {
+      "name": "THEONEPISREAL.jpeg",
+      "type": "Image",
+      "size": 199,
+      "sizeFormatted": "199 KB",
+      "location": "Demo",
+      "date": "2025-05-01T21:20:32.265Z",
+      "url": "/DriveDemo/drive/THEONEPISREAL.jpeg",
+      "metadata": {
+        "name": "THEONEPISREAL.jpeg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpeg"
+      },
+      "favorite": true
+    },
+    {
+      "name": "meeting_notes.md",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.133Z",
+      "url": "/DriveDemo/drive/Work/meeting_notes.md",
+      "metadata": {
+        "name": "meeting_notes.md",
+        "mimeType": "application/octet-stream",
+        "extension": ".md"
+      },
+      "favorite": false
+    },
+    {
+      "name": "project_proposal.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-05T08:09:58.129Z",
+      "url": "/DriveDemo/drive/Work/project_proposal.txt",
+      "metadata": {
+        "name": "project_proposal.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": true
+    }
+  ],
+  "folders": {
+    "DriveDemo": ["drive"],
+    "DriveDemo\\drive": [
+      "Downloads",
+      "Images",
+      "Music",
+      "Personal",
+      "Shared",
+      "Videos",
+      "Work"
+    ],
+    "DriveDemo\\drive\\Downloads": [],
+    "DriveDemo\\drive\\Images": ["Family", "Vacation"],
+    "DriveDemo\\drive\\Images\\Family": [],
+    "DriveDemo\\drive\\Images\\Vacation": [],
+    "DriveDemo\\drive\\Music": [],
+    "DriveDemo\\drive\\Personal": [],
+    "DriveDemo\\drive\\Shared": [],
+    "DriveDemo\\drive\\Videos": [],
+    "DriveDemo\\drive\\Work": []
+  }
+}

@@ -1,30 +1,47 @@
 import fs from "fs/promises";
 import path from "path";
+import demoData from "@/public/DriveDemo/index.json";
 import connectToDatabase from "@/lib/mongodb";
 import File from "@/models/file";
 
-// Función para obtener archivos demo
+// Helper function to fetch demo files
 async function fetchDemoFile(fileUrl) {
   try {
-    // Crear ruta de acceso al archivo en public/DriveDemo
-    const demoFilePath = path.join(
-      process.cwd(),
-      "public",
-      "DriveDemo",
-      fileUrl
-    );
+    // Remove leading slash if present
+    const normalizedUrl = fileUrl.startsWith("/")
+      ? fileUrl.substring(1)
+      : fileUrl;
 
-    console.log("Accediendo al archivo demo:", demoFilePath);
+    console.log("Fetching demo file:", normalizedUrl);
 
-    // Verificar si el archivo existe
-    await fs.access(demoFilePath);
+    // Find the file in demo data
+    const fileInfo = demoData.files.find((file) => file.url === normalizedUrl);
 
-    // Leer el archivo
-    const fileBuffer = await fs.readFile(demoFilePath);
-    return fileBuffer;
+    if (!fileInfo) {
+      console.log("File not found in demo data:", normalizedUrl);
+      throw new Error(`File not found in demo data: ${normalizedUrl}`);
+    }
+
+    // Construct the public URL for the file
+    const publicUrl = `/DriveDemo/${normalizedUrl}`;
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const fullUrl = new URL(publicUrl, baseUrl);
+
+    console.log("Fetching from:", fullUrl.toString());
+
+    // Fetch the file from our server's public directory
+    const response = await fetch(fullUrl);
+
+    if (!response.ok) {
+      throw new Error(`File fetch failed with status: ${response.status}`);
+    }
+
+    // Return the file as Buffer
+    return Buffer.from(await response.arrayBuffer());
   } catch (error) {
-    console.error("Demo file error:", error);
-    throw new Error(`Demo file not found: ${fileUrl}`);
+    console.error("Demo file fetch error:", error);
+    throw error;
   }
 }
 

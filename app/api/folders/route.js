@@ -3,36 +3,49 @@ import fs from "fs";
 import fsExtra from "fs-extra";
 import path from "path";
 import { promises as fsPromises } from "fs";
+import demoData from "@/public/DriveDemo/index.json";
 
 import File from "@/models/file";
-// En la función listFoldersFromDemo
+// Helper function to handle different path formats
 async function listFoldersFromDemo(directoryPath) {
   try {
-    // Extraer la ruta después de "uploads/"
-    const relativePath = directoryPath.replace(/^uploads\//, "");
-    const fullDemoPath = path.join(
-      process.cwd(),
-      "public",
-      "DriveDemo",
-      relativePath
-    );
+    // Normalize the path to handle both slash types
+    let relativePath = directoryPath.replace(/^uploads\//, "");
 
-    console.log("Listando carpetas de:", fullDemoPath);
+    console.log("Initial path:", relativePath);
 
-    // Leer el directorio
-    const items = await fsPromises.readdir(fullDemoPath, {
-      withFileTypes: true,
-    });
+    // Special case for root
+    if (relativePath === "" || relativePath === "/") {
+      console.log("Returning root folders");
+      return demoData.folders["DriveDemo"] || [];
+    }
 
-    // Filtrar solo directorios
-    const folders = items
-      .filter((item) => item.isDirectory())
-      .map((item) => item.name);
+    // Special case for /drive root
+    if (relativePath === "drive" || relativePath === "/drive") {
+      console.log("Returning drive folders");
+      return demoData.folders["DriveDemo\\drive"] || [];
+    }
 
-    return folders;
+    // Convert forward slashes to backslashes for JSON lookup
+    relativePath = relativePath.replace(/\//g, "\\");
+
+    // Add "DriveDemo\" prefix if not already present
+    if (!relativePath.startsWith("DriveDemo\\")) {
+      relativePath = "DriveDemo\\" + relativePath;
+    }
+
+    console.log("Looking for folders with key:", relativePath);
+
+    // Simply look up the path directly in the folders object
+    if (demoData.folders[relativePath]) {
+      return demoData.folders[relativePath];
+    }
+
+    console.log("Path not found in folders structure");
+    return [];
   } catch (error) {
     console.error("Error fetching demo folders:", error);
-    return []; // Devuelve array vacío en caso de error
+    return [];
   }
 }
 
