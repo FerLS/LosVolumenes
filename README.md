@@ -1,7 +1,5 @@
 # Los Volumenes
 
-## Descripción
-
 Los Volumenes es una aplicación de almacenamiento en la nube personal desarrollada con Next.js que te permite organizar y gestionar tus archivos de manera sencilla e intuitiva. Con una interfaz moderna y responsive, podrás acceder a tus archivos desde cualquier dispositivo.
 
 ## Configuración de tu propio almacenamiento en la nube
