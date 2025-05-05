@@ -25,12 +25,34 @@ async function fetchDemoFile(fileUrl) {
       throw new Error(`File not found in demo data: ${fileUrl}`);
     }
 
-    const filePath = path.join(process.cwd(), "public", fileInfo.url);
-    console.log("Reading file from filesystem:", filePath);
+    // Usar URL relativa absoluta para evitar problemas con dominios
+    // Esto funcionará tanto en localhost como en producción
+    const baseUrl =
+      process.env.VERCEL_URL ||
+      process.env.NEXTAUTH_URL ||
+      "http://localhost:3000";
 
-    // Lee el archivo directamente
-    const fileBuffer = await fs.readFile(filePath);
-    return fileBuffer;
+    // Asegurarse de que baseUrl tiene el protocolo adecuado
+    const baseUrlWithProtocol = baseUrl.startsWith("http")
+      ? baseUrl
+      : `https://${baseUrl}`;
+
+    const fullUrl = `${baseUrlWithProtocol}${fileInfo.url}`;
+    console.log("Fetching from URL:", fullUrl);
+
+    const response = await fetch(fullUrl, {
+      // Agregar headers si hay restricciones de CORS
+      headers: {
+        "User-Agent": "NextJS-Server/1.0",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`File fetch failed with status: ${response.status}`);
+    }
+
+    // Return the file as Buffer
+    return Buffer.from(await response.arrayBuffer());
   } catch (error) {
     console.error("Demo file fetch error:", error);
     throw error;
