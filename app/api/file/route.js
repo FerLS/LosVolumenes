@@ -8,37 +8,29 @@ import File from "@/models/file";
 async function fetchDemoFile(fileUrl) {
   try {
     // Remove leading slash if present
-    const normalizedUrl = fileUrl.startsWith("/")
-      ? fileUrl.substring(1)
-      : fileUrl;
 
-    console.log("Fetching demo file:", normalizedUrl);
+    console.log("Fetching demo file:", fileUrl);
 
     // Find the file in demo data
-    const fileInfo = demoData.files.find((file) => file.url === normalizedUrl);
+    // Try both with and without 'DriveDemo/' prefix
+
+    const fileInfo = demoData.files.find(
+      (file) =>
+        file.url === fileUrl ||
+        file.url === fileUrl.replace(/^\/DriveDemo\//, "")
+    );
 
     if (!fileInfo) {
-      console.log("File not found in demo data:", normalizedUrl);
-      throw new Error(`File not found in demo data: ${normalizedUrl}`);
+      console.log("File not found in demo data:", fileUrl);
+      throw new Error(`File not found in demo data: ${fileUrl}`);
     }
 
-    // Construct the public URL for the file
-    const publicUrl = `/DriveDemo/${normalizedUrl}`;
+    const filePath = path.join(process.cwd(), "public", fileInfo.url);
+    console.log("Reading file from filesystem:", filePath);
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const fullUrl = new URL(publicUrl, baseUrl);
-
-    console.log("Fetching from:", fullUrl.toString());
-
-    // Fetch the file from our server's public directory
-    const response = await fetch(fullUrl);
-
-    if (!response.ok) {
-      throw new Error(`File fetch failed with status: ${response.status}`);
-    }
-
-    // Return the file as Buffer
-    return Buffer.from(await response.arrayBuffer());
+    // Lee el archivo directamente
+    const fileBuffer = await fs.readFile(filePath);
+    return fileBuffer;
   } catch (error) {
     console.error("Demo file fetch error:", error);
     throw error;
