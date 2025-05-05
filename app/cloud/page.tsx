@@ -495,7 +495,6 @@ function Cloud() {
                       className="text-foreground text-center font-bold flex items-center justify-center flex-col space-y-10 min-h-[70dvh] w-full absolute inset-0 transform"
                       style={{
                         fontFamily: code.style.fontFamily,
-                        visibility: "hidden",
                       }}
                     >
                       <p className="text-3xl">
