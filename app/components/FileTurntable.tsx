@@ -103,7 +103,11 @@ export default function FileTurntable({
 
                     <div className="aspect-square relative w-full">
                       <Image
-                        src={`/api/file?url=${file.url}`}
+                        src={
+                          process.env.NEXT_PUBLIC_DEMO
+                            ? file.url
+                            : `/api/file?url=${file.url}`
+                        }
                         alt="File"
                         layout="fill"
                         objectFit="cover"

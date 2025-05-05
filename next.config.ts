@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
-// next.config.js
-module.exports = {
+  images: {
+    domains: ["raw.githubusercontent.com"],
+  },
   async rewrites() {
     return [
       {

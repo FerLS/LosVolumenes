@@ -85,7 +85,7 @@ function Cloud() {
     return queryParam || "";
   });
   const [gridSize, setGridSize] = useState(2);
-  const FETCHDELAY = 450;
+  const FETCHDELAY = 600;
   const isDesktop = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {

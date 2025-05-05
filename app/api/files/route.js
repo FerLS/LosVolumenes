@@ -5,58 +5,66 @@ import path from "path";
 import EXIF from "exif-js";
 import axios from "axios";
 import exifr from "exifr";
+import { promises as fsPromises } from "fs";
 
-// GitHub API handling for demo mode
-async function listFilesFromGitHub(directoryPath) {
-  const GITHUB_REPO = process.env.GITHUB_REPO || "owner/repo";
-  const GITHUB_BRANCH = "main"; // Always use main branch
-
-  // Convert local path to GitHub path format
-  const githubPath = directoryPath.replace(/^.*?uploads\//, "");
-
-  const headers = {
-    Accept: "application/vnd.github+json",
-  };
-
+// En la función listFilesFromDemo
+async function listFilesFromDemo(directoryPath) {
   try {
-    const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/${githubPath}?ref=${GITHUB_BRANCH}`,
-      { headers }
+    // Extraer la ruta después de "uploads/"
+    const relativePath = directoryPath.replace(/^uploads\//, "");
+    const fullDemoPath = path.join(
+      process.cwd(),
+      "public",
+      "DriveDemo",
+      relativePath
     );
 
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
+    console.log("Listando archivos de:", fullDemoPath);
 
-    const items = await response.json();
+    // Leer el directorio
+    const items = await fsPromises.readdir(fullDemoPath, {
+      withFileTypes: true,
+    });
 
-    // Use for loop instead of map to avoid potential transpilation issues
+    // Filtrar solo archivos (no directorios)
+    const files = items.filter((item) => item.isFile());
+
+    // Convertir a formato esperado
     const result = [];
-    for (let index = 0; index < items.length; index++) {
-      const item = items[index];
+    for (const file of files) {
+      const fileStat = await fsPromises.stat(
+        path.join(fullDemoPath, file.name)
+      );
+      const fileSizeInKB = Math.round(fileStat.size / 1024);
+
+      // URL relativa para acceder al archivo desde el navegador
+      const publicUrl = `${relativePath}/${file.name}`;
+
       result.push({
-        name: item.name,
-        type: getFileType(item.name),
-        size: item.size || 0,
-        sizeFormatted: `${Math.round((item.size || 0) / 1024)} KB`,
-        location: "Unknown",
-        date: item.last_modified || new Date().toLocaleDateString(),
-        url: `${githubPath}/${item.name}`,
+        name: file.name,
+        type: getFileType(file.name),
+        size: fileSizeInKB,
+        sizeFormatted: `${fileSizeInKB} KB`,
+        location: "Demo",
+        date: fileStat.mtime.toISOString(),
+        url: publicUrl,
         metadata: {
-          name: item.name,
-          mimeType: getMimeType(item.name),
-          extension: path.extname(item.name),
+          name: file.name,
+          mimeType: getMimeType(file.name),
+          extension: path.extname(file.name),
         },
-        github_url: item.download_url,
+        favorite: false,
       });
     }
 
     return result;
   } catch (error) {
-    console.error("Error fetching GitHub files:", error);
-    return []; // Return empty array on error for graceful degradation
+    console.error("Error fetching demo files:", error);
+    return []; // Return empty array in case of error
   }
 }
+
+// También actualiza la función getAllDemoFiles de manera similar
 
 // Helper function to determine file type
 function getFileType(fileName) {
@@ -124,7 +132,7 @@ const convertToDecimalDegrees = (degrees, minutes, seconds) => {
 export async function POST(request) {
   try {
     // Check if in demo mode - prevent file uploads
-    if (process.env.DEMO === "true") {
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
       return new Response(
         JSON.stringify({ message: "File uploads not allowed in demo mode" }),
         { status: 403 }
@@ -327,7 +335,7 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     // Check if in demo mode - prevent modifications
-    if (process.env.DEMO === "true") {
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
       return new Response(
         JSON.stringify({
           message: "File modifications not allowed in demo mode",
@@ -406,55 +414,67 @@ export async function PUT(request) {
 
 export async function GET(request) {
   try {
-    const isDemo = process.env.DEMO === "true";
+    const isDemo = process.env.NEXT_PUBLIC_DEMO === "true";
 
     if (isDemo) {
       const url = new URL(request.url);
       const type = url.searchParams.get("type");
-      const pathParam = url.searchParams.get("path");
+      const pathParam = url.searchParams.get("path") || "drive";
       const stats = url.searchParams.get("stats");
 
-      // Handle directory path for GitHub API
-      const directoryPath = pathParam
-        ? path.join("uploads", pathParam)
-        : "uploads/drive";
+      // Path for the demo folder
+      const directoryPath = `uploads/${pathParam}`;
 
       try {
         // For stats request in demo mode
         if (stats) {
-          // You could either provide mock stats or calculate from GitHub
-          // This is a simplified version with mock data
+          // Get all files recursively for stats
+          const allFiles = await getAllDemoFiles("drive");
+
+          const totalFiles = allFiles.length;
+          const totalSize = allFiles.reduce(
+            (acc, file) => acc + (file.size || 0),
+            0
+          );
+          const totalSizeInMb = totalSize / 1024;
+
+          // Calculate type stats
+          const typeStats = allFiles.reduce((acc, file) => {
+            acc[file.type] = (acc[file.type] || 0) + 1;
+            return acc;
+          }, {});
+
+          // Get recent files sorted by date
+          const recentFiles = [...allFiles]
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 3);
+
           return new Response(
             JSON.stringify({
-              totalFiles: 12,
-              totalSizeInMb: 25.7,
-              typeStats: {
-                Image: 8,
-                Video: 2,
-                Audio: 1,
-                Other: 1,
-              },
-              recentFiles: [], // Could be populated with actual GitHub data
+              totalFiles,
+              totalSizeInMb,
+              typeStats,
+              recentFiles,
             }),
             { status: 200 }
           );
         }
 
-        // Get files from GitHub
-        const githubFiles = await listFilesFromGitHub(directoryPath);
+        // Get files from the demo folder
+        const demoFiles = await listFilesFromDemo(directoryPath);
 
         // Apply filters similar to the database query
         const filteredFiles =
           type && type !== "All"
-            ? githubFiles.filter((file) => file.type === type)
-            : githubFiles;
+            ? demoFiles.filter((file) => file.type === type)
+            : demoFiles;
 
         return new Response(JSON.stringify(filteredFiles), { status: 200 });
       } catch (error) {
-        console.error("GitHub API error:", error);
+        console.error("Demo files error:", error);
         return new Response(
           JSON.stringify({
-            message: "Failed to fetch files from GitHub",
+            message: "Failed to fetch demo files",
             error: error.message,
           }),
           { status: 500 }
@@ -511,10 +531,56 @@ export async function GET(request) {
   }
 }
 
+// Helper function to get all files recursively for stats
+async function getAllDemoFiles(directoryPath) {
+  let allFiles = [];
+
+  async function scanDirectory(dirPath) {
+    const fullPath = path.join(process.cwd(), "public", "DriveDemo", dirPath);
+
+    try {
+      const items = await fsPromises.readdir(fullPath, { withFileTypes: true });
+
+      for (const item of items) {
+        if (item.isDirectory()) {
+          // Recursion for subdirectories
+          await scanDirectory(path.join(dirPath, item.name));
+        } else {
+          // It's a file, add it to the list
+          const fileStat = await fsPromises.stat(
+            path.join(fullPath, item.name)
+          );
+          const fileSizeInKB = Math.round(fileStat.size / 1024);
+
+          allFiles.push({
+            name: item.name,
+            type: getFileType(item.name),
+            size: fileSizeInKB,
+            sizeFormatted: `${fileSizeInKB} KB`,
+            location: "Demo",
+            date: fileStat.mtime.toISOString(),
+            url: `${dirPath}/${item.name}`,
+            metadata: {
+              name: item.name,
+              mimeType: getMimeType(item.name),
+              extension: path.extname(item.name),
+            },
+          });
+        }
+      }
+    } catch (error) {
+      console.error(`Error scanning directory ${dirPath}:`, error);
+    }
+  }
+
+  await scanDirectory(directoryPath);
+  return allFiles;
+}
+
 export async function DELETE(request) {
   try {
     // Check if in demo mode - prevent deletions
-    if (process.env.DEMO === "true") {
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
       return new Response(
         JSON.stringify({ message: "File deletions not allowed in demo mode" }),
         { status: 403 }

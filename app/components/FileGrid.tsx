@@ -545,7 +545,11 @@ export default function FileGrid({
                       <CardContent className="flex-grow relative overflow-hidden rounded-md px-0 py-0">
                         {file.type === "Image" && visibleFiles.has(index) ? (
                           <Image
-                            src={`/api/file?url=${file.url}`}
+                            src={
+                              process.env.NEXT_PUBLIC_DEMO
+                                ? file.url
+                                : `/api/file?url=${file.url}`
+                            }
                             alt="File"
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -596,7 +600,10 @@ export default function FileGrid({
                             className="text-sm text-white z-10 truncate"
                             style={{ fontFamily: code.style.fontFamily }}
                           >
-                            {file.url.split("/").pop()?.split("-").pop()}
+                            {(file.url &&
+                              file.url.split("/").pop()?.split("-").pop()) ||
+                              file.name ||
+                              "Unnamed File"}
                           </h3>
                         </CardContent>
                       )}

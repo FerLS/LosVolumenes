@@ -313,14 +313,16 @@ export default function FileDrawer({
 
   // Get file name from URL
   const getFileName = () => {
-    const fullName = file?.url.split("/").pop() || "";
+    if (!file || !file.url) return "Unnamed File";
+    const fullName = file.url.split("/").pop() || "";
     const nameParts = fullName.split("-");
     return nameParts.length > 1 ? nameParts[1] : fullName;
   };
 
   // Get file extension
   const getFileExtension = () => {
-    const fullName = file?.url.split("/").pop() || "";
+    if (!file || !file.url) return "";
+    const fullName = file.url.split("/").pop() || "";
     const parts = fullName.split(".");
     return parts.length > 1 ? parts[parts.length - 1].toUpperCase() : "";
   };
@@ -360,7 +362,11 @@ export default function FileDrawer({
         >
           <div className="relative w-full h-full min-h-[60vh] flex items-center justify-center">
             <Image
-              src={`/api/file?url=${file.url}`}
+              src={
+                process.env.NEXT_PUBLIC_DEMO
+                  ? file.url
+                  : `/api/file?url=${file.url}`
+              }
               alt={getFileName()}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
@@ -385,7 +391,11 @@ export default function FileDrawer({
           style={{ touchAction: isDesktop ? "auto" : "none" }}
         >
           <video
-            src={`/api/file?url=${file.url}`}
+            src={
+              process.env.NEXT_PUBLIC_DEMO
+                ? file.url
+                : `/api/file?url=${file.url}`
+            }
             controls
             className="w-full h-full max-h-[80vh]"
           />
@@ -410,7 +420,11 @@ export default function FileDrawer({
               {getFileName()}
             </h3>
             <audio
-              src={`/api/file?url=${file.url}`}
+              src={
+                process.env.NEXT_PUBLIC_DEMO
+                  ? file.url
+                  : `/api/file?url=${file.url}`
+              }
               controls
               className="w-full"
             />

@@ -2,8 +2,39 @@ import connectToDatabase from "@/lib/mongodb";
 import fs from "fs";
 import fsExtra from "fs-extra";
 import path from "path";
+import { promises as fsPromises } from "fs";
 
 import File from "@/models/file";
+// En la función listFoldersFromDemo
+async function listFoldersFromDemo(directoryPath) {
+  try {
+    // Extraer la ruta después de "uploads/"
+    const relativePath = directoryPath.replace(/^uploads\//, "");
+    const fullDemoPath = path.join(
+      process.cwd(),
+      "public",
+      "DriveDemo",
+      relativePath
+    );
+
+    console.log("Listando carpetas de:", fullDemoPath);
+
+    // Leer el directorio
+    const items = await fsPromises.readdir(fullDemoPath, {
+      withFileTypes: true,
+    });
+
+    // Filtrar solo directorios
+    const folders = items
+      .filter((item) => item.isDirectory())
+      .map((item) => item.name);
+
+    return folders;
+  } catch (error) {
+    console.error("Error fetching demo folders:", error);
+    return []; // Devuelve array vacío en caso de error
+  }
+}
 
 async function udpateFilesRecursive(dirPath, newPath) {
   const items = fs.readdirSync(dirPath);
@@ -25,6 +56,7 @@ async function udpateFilesRecursive(dirPath, newPath) {
 
 export async function GET(request) {
   try {
+    const isDemo = process.env.NEXT_PUBLIC_DEMO === "true";
     const url = new URL(request.url);
     const folderPath = url.searchParams.get("path");
 
@@ -34,18 +66,27 @@ export async function GET(request) {
       });
     }
 
-    const serverFolderPath = path.join(process.cwd(), "uploads", folderPath);
-    const folders = fs
-      .readdirSync(serverFolderPath)
-      .filter((file) =>
-        fs.statSync(path.join(serverFolderPath, file)).isDirectory()
-      );
-    return new Response(JSON.stringify(folders), { status: 200 });
+    if (isDemo) {
+      // En modo demo, obtener carpetas de la estructura demo
+      const serverFolderPath = `uploads/${folderPath}`;
+      const folders = await listFoldersFromDemo(serverFolderPath);
+
+      return new Response(JSON.stringify(folders), { status: 200 });
+    } else {
+      // Regular mode - use file system
+      const serverFolderPath = path.join(process.cwd(), "uploads", folderPath);
+      const folders = fs
+        .readdirSync(serverFolderPath)
+        .filter((file) =>
+          fs.statSync(path.join(serverFolderPath, file)).isDirectory()
+        );
+      return new Response(JSON.stringify(folders), { status: 200 });
+    }
   } catch (error) {
-    console.error("Error fetching files:", error);
+    console.error("Error fetching folders:", error);
     return new Response(
       JSON.stringify({
-        message: "Failed to fetch files",
+        message: "Failed to fetch folders",
         error: error.message,
       }),
       { status: 500 }
@@ -55,6 +96,14 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
+    // Check if in demo mode - prevent folder creation
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
+      return new Response(
+        JSON.stringify({ message: "Folder creation not allowed in demo mode" }),
+        { status: 403 }
+      );
+    }
+
     const { path: folderPath } = await request.json();
 
     if (!folderPath) {
@@ -99,6 +148,16 @@ export async function POST(request) {
 
 export async function PUT(request) {
   try {
+    // Check if in demo mode - prevent modifications
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
+      return new Response(
+        JSON.stringify({
+          message: "Folder modifications not allowed in demo mode",
+        }),
+        { status: 403 }
+      );
+    }
+
     await connectToDatabase();
 
     const { oldPaths, newPath } = await request.json();
@@ -132,7 +191,6 @@ export async function PUT(request) {
         continue;
       }
 
-      //Comprobar si esta vacio
       await udpateFilesRecursive(
         oldFolderPath,
         newPath + "/" + oldPath.split("/").pop()
@@ -169,8 +227,19 @@ export async function PUT(request) {
     );
   }
 }
+
 export async function DELETE(request) {
   try {
+    // Check if in demo mode - prevent deletions
+    if (process.env.NEXT_PUBLIC_DEMO === "true") {
+      return new Response(
+        JSON.stringify({
+          message: "Folder deletions not allowed in demo mode",
+        }),
+        { status: 403 }
+      );
+    }
+
     const { folders: folderPaths } = await request.json();
 
     if (!folderPaths) {
