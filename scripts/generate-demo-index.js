@@ -72,7 +72,7 @@ function scanDirectory(dir, basePath = "") {
         sizeFormatted: `${fileSizeInKB} KB`,
         location: "Demo",
         date: stat.mtime.toISOString(),
-        url: itemRelativePath.replace(/\\/g, "/"), // Asegurar formato de URL con /
+        url: "/" + itemRelativePath.replace(/\\/g, "/"), // Asegurar formato de URL con /
         metadata: {
           name: item.name,
           mimeType: getMimeType(item.name),

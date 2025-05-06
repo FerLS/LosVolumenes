@@ -1,1 +1,0 @@
-This folder contains images related to vacations. Please add your vacation images here.

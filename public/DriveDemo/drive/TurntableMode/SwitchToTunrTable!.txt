@@ -1,0 +1,2 @@
+El modo turntable te permite ver los archivos de una manera mas divertida, cada archivo tiene su estilo propio, las carpetas no
+son visibles en este modo, y solo puede verse un tipo de archivo a la vez.

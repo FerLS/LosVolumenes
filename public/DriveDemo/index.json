@@ -1,49 +1,64 @@
 {
   "files": [
     {
-      "name": "README.txt",
+      "name": "MinecraftPirataNoVirus.exe",
       "type": "Other",
-      "size": 0,
-      "sizeFormatted": "0 KB",
+      "size": 19,
+      "sizeFormatted": "19 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:09:58.113Z",
-      "url": "/DriveDemo/drive/Downloads/README.txt",
+      "date": "2025-04-28T09:00:48.837Z",
+      "url": "/DriveDemo/drive/Downloads/MinecraftPirataNoVirus.exe",
       "metadata": {
-        "name": "README.txt",
-        "mimeType": "text/plain",
-        "extension": ".txt"
+        "name": "MinecraftPirataNoVirus.exe",
+        "mimeType": "application/octet-stream",
+        "extension": ".exe"
       },
       "favorite": false
     },
     {
-      "name": "README.txt",
-      "type": "Other",
-      "size": 0,
-      "sizeFormatted": "0 KB",
+      "name": "Cabra mastica chicle.mp4",
+      "type": "Video",
+      "size": 8386,
+      "sizeFormatted": "8386 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:09:58.150Z",
-      "url": "/DriveDemo/drive/Images/Family/README.txt",
+      "date": "2025-05-06T08:42:00.511Z",
+      "url": "/DriveDemo/drive/Personal/Cabra mastica chicle.mp4",
       "metadata": {
-        "name": "README.txt",
-        "mimeType": "text/plain",
-        "extension": ".txt"
+        "name": "Cabra mastica chicle.mp4",
+        "mimeType": "video/mp4",
+        "extension": ".mp4"
       },
       "favorite": false
     },
     {
-      "name": "README.txt",
-      "type": "Other",
-      "size": 0,
-      "sizeFormatted": "0 KB",
+      "name": "metal-pipe-clang.mp3",
+      "type": "Audio",
+      "size": 45,
+      "sizeFormatted": "45 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:09:58.145Z",
-      "url": "/DriveDemo/drive/Images/Vacation/README.txt",
+      "date": "2025-05-06T08:46:23.994Z",
+      "url": "/DriveDemo/drive/Personal/metal-pipe-clang.mp3",
       "metadata": {
-        "name": "README.txt",
-        "mimeType": "text/plain",
-        "extension": ".txt"
+        "name": "metal-pipe-clang.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
       },
       "favorite": false
+    },
+    {
+      "name": "random-mp3.mp3",
+      "type": "Audio",
+      "size": 237,
+      "sizeFormatted": "237 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:46:12.693Z",
+      "url": "/DriveDemo/drive/Personal/random-mp3.mp3",
+      "metadata": {
+        "name": "random-mp3.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": true
     },
     {
       "name": "resume.docx",
@@ -66,7 +81,7 @@
       "size": 0,
       "sizeFormatted": "0 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:30:46.657Z",
+      "date": "2025-05-06T08:44:14.220Z",
       "url": "/DriveDemo/drive/README.txt",
       "metadata": {
         "name": "README.txt",
@@ -88,7 +103,247 @@
         "mimeType": "image/jpeg",
         "extension": ".jpeg"
       },
+      "favorite": false
+    },
+    {
+      "name": "descarga (1).jpg",
+      "type": "Image",
+      "size": 6,
+      "sizeFormatted": "6 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:31.467Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga (1).jpg",
+      "metadata": {
+        "name": "descarga (1).jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "descarga (2).jpg",
+      "type": "Image",
+      "size": 11,
+      "sizeFormatted": "11 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:33.444Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga (2).jpg",
+      "metadata": {
+        "name": "descarga (2).jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "descarga (3).jpg",
+      "type": "Image",
+      "size": 5,
+      "sizeFormatted": "5 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:35.598Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga (3).jpg",
+      "metadata": {
+        "name": "descarga (3).jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "descarga (4).jpg",
+      "type": "Image",
+      "size": 6,
+      "sizeFormatted": "6 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:38.817Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga (4).jpg",
+      "metadata": {
+        "name": "descarga (4).jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "descarga (5).jpg",
+      "type": "Image",
+      "size": 5,
+      "sizeFormatted": "5 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:45.736Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga (5).jpg",
+      "metadata": {
+        "name": "descarga (5).jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
       "favorite": true
+    },
+    {
+      "name": "descarga.jpg",
+      "type": "Image",
+      "size": 8,
+      "sizeFormatted": "8 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:29.009Z",
+      "url": "/DriveDemo/drive/TurntableMode/descarga.jpg",
+      "metadata": {
+        "name": "descarga.jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "dog-334099.mp3",
+      "type": "Audio",
+      "size": 158,
+      "sizeFormatted": "158 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:55:44.300Z",
+      "url": "/DriveDemo/drive/TurntableMode/dog-334099.mp3",
+      "metadata": {
+        "name": "dog-334099.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": false
+    },
+    {
+      "name": "dog-bark-179915.mp3",
+      "type": "Audio",
+      "size": 11,
+      "sizeFormatted": "11 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:56:01.175Z",
+      "url": "/DriveDemo/drive/TurntableMode/dog-bark-179915.mp3",
+      "metadata": {
+        "name": "dog-bark-179915.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": false
+    },
+    {
+      "name": "dog-bark-sound-effect-322989.mp3",
+      "type": "Audio",
+      "size": 253,
+      "sizeFormatted": "253 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:55:46.985Z",
+      "url": "/DriveDemo/drive/TurntableMode/dog-bark-sound-effect-322989.mp3",
+      "metadata": {
+        "name": "dog-bark-sound-effect-322989.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": false
+    },
+    {
+      "name": "dog-barking-at-cat-336373.mp3",
+      "type": "Audio",
+      "size": 631,
+      "sizeFormatted": "631 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:55:56.807Z",
+      "url": "/DriveDemo/drive/TurntableMode/dog-barking-at-cat-336373.mp3",
+      "metadata": {
+        "name": "dog-barking-at-cat-336373.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": false
+    },
+    {
+      "name": "images.jpg",
+      "type": "Image",
+      "size": 5,
+      "sizeFormatted": "5 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:48.193Z",
+      "url": "/DriveDemo/drive/TurntableMode/images.jpg",
+      "metadata": {
+        "name": "images.jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "single-dog-deep-bark-sound-effect-325248.mp3",
+      "type": "Audio",
+      "size": 253,
+      "sizeFormatted": "253 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:56:04.711Z",
+      "url": "/DriveDemo/drive/TurntableMode/single-dog-deep-bark-sound-effect-325248.mp3",
+      "metadata": {
+        "name": "single-dog-deep-bark-sound-effect-325248.mp3",
+        "mimeType": "audio/mpeg",
+        "extension": ".mp3"
+      },
+      "favorite": false
+    },
+    {
+      "name": "SwitchToTunrTable!.txt",
+      "type": "Other",
+      "size": 0,
+      "sizeFormatted": "0 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:54:07.639Z",
+      "url": "/DriveDemo/drive/TurntableMode/SwitchToTunrTable!.txt",
+      "metadata": {
+        "name": "SwitchToTunrTable!.txt",
+        "mimeType": "text/plain",
+        "extension": ".txt"
+      },
+      "favorite": false
+    },
+    {
+      "name": "bolsa_1.jpg",
+      "type": "Image",
+      "size": 7,
+      "sizeFormatted": "7 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:32:46.549Z",
+      "url": "/DriveDemo/drive/Work/bolsa_1.jpg",
+      "metadata": {
+        "name": "bolsa_1.jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "bolsa_2.jpg",
+      "type": "Image",
+      "size": 54,
+      "sizeFormatted": "54 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:32:53.184Z",
+      "url": "/DriveDemo/drive/Work/bolsa_2.jpg",
+      "metadata": {
+        "name": "bolsa_2.jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
+    },
+    {
+      "name": "bolsa_3.jpg",
+      "type": "Image",
+      "size": 10,
+      "sizeFormatted": "10 KB",
+      "location": "Demo",
+      "date": "2025-05-06T08:33:02.190Z",
+      "url": "/DriveDemo/drive/Work/bolsa_3.jpg",
+      "metadata": {
+        "name": "bolsa_3.jpg",
+        "mimeType": "image/jpeg",
+        "extension": ".jpg"
+      },
+      "favorite": false
     },
     {
       "name": "meeting_notes.md",
@@ -96,7 +351,7 @@
       "size": 0,
       "sizeFormatted": "0 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:09:58.133Z",
+      "date": "2025-05-06T08:47:27.098Z",
       "url": "/DriveDemo/drive/Work/meeting_notes.md",
       "metadata": {
         "name": "meeting_notes.md",
@@ -111,35 +366,29 @@
       "size": 0,
       "sizeFormatted": "0 KB",
       "location": "Demo",
-      "date": "2025-05-05T08:09:58.129Z",
+      "date": "2025-05-06T08:50:10.869Z",
       "url": "/DriveDemo/drive/Work/project_proposal.txt",
       "metadata": {
         "name": "project_proposal.txt",
         "mimeType": "text/plain",
         "extension": ".txt"
       },
-      "favorite": true
+      "favorite": false
     }
   ],
   "folders": {
-    "DriveDemo": ["drive"],
+    "DriveDemo": [
+      "drive"
+    ],
     "DriveDemo\\drive": [
       "Downloads",
-      "Images",
-      "Music",
       "Personal",
-      "Shared",
-      "Videos",
+      "TurntableMode",
       "Work"
     ],
     "DriveDemo\\drive\\Downloads": [],
-    "DriveDemo\\drive\\Images": ["Family", "Vacation"],
-    "DriveDemo\\drive\\Images\\Family": [],
-    "DriveDemo\\drive\\Images\\Vacation": [],
-    "DriveDemo\\drive\\Music": [],
     "DriveDemo\\drive\\Personal": [],
-    "DriveDemo\\drive\\Shared": [],
-    "DriveDemo\\drive\\Videos": [],
+    "DriveDemo\\drive\\TurntableMode": [],
     "DriveDemo\\drive\\Work": []
   }
 }
